@@ -1,2 +1,1 @@
-# 4d-example-gemma-4
-Gemma 4 in GGUF
+## [google/gemma-4-E2B-it](https://huggingface.co/google/gemma-4-E2B-it)
