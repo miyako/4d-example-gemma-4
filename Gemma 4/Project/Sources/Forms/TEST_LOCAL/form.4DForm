@@ -78,7 +78,7 @@
 					],
 					"focusable": false,
 					"method": "ObjectMethods/Continue Conversation.4dm",
-					"sizingX": "move"
+					"sizingX": "fixed"
 				},
 				"Image": {
 					"type": "input",
@@ -89,7 +89,7 @@
 					"dataSource": "Form:C1466.image",
 					"enterable": true,
 					"fill": "transparent",
-					"sizingX": "grow",
+					"sizingX": "move",
 					"sizingY": "grow",
 					"hideFocusRing": true,
 					"dataSourceTypeHint": "picture",
@@ -99,7 +99,7 @@
 			}
 		}
 	],
-	"geometryStamp": 269,
+	"geometryStamp": 271,
 	"menuBar": "Barre #1",
 	"method": "method.4dm",
 	"editor": {
