@@ -11,6 +11,7 @@ property _onResponse : 4D:C1709.Function
 property stream : Boolean
 property image : Picture
 property helper : cs:C1710.AIKit.OpenAIVisionHelper
+property reasoning_content : Text
 
 Class constructor($baseURL : Text; \
 $resultObjectName : Text; \
@@ -37,6 +38,7 @@ Function focusUserPrompt() : cs:C1710._Agent
 Function clearConversation() : cs:C1710._Agent
 	
 	This:C1470.ChatResult:=""
+	This:C1470.reasoning_content:=""
 	//This.messages:=[]
 	
 	If (Not:C34(This:C1470.preemptive))
@@ -64,6 +66,8 @@ Function continueConversation($message : Text) : cs:C1710.AIKit.OpenAIChatComple
 	OBJECT SET ENABLED:C1123(*; This:C1470.continueObjectName; False:C215)
 	
 	//This.messages.combine($messages)
+	
+	This:C1470.reasoning_content:=""
 	
 	If (This:C1470.ChatResult#"")
 		This:C1470.ChatResult+="\r\r"
@@ -148,7 +152,21 @@ Function onEventStream($chatCompletionsResult : cs:C1710.AIKit.OpenAIChatComplet
 		Else 
 			//partial result
 			If ($chatCompletionsResult.choice#Null:C1517)
-				This:C1470.ChatResult+=$chatCompletionsResult.choice.delta.text
+				If ($chatCompletionsResult.choice.delta.text#"")
+					
+					If (This:C1470.reasoning_content#"")
+						This:C1470.reasoning_content:=""
+						This:C1470.ChatResult:=This:C1470.reasoning_content
+					End if 
+					
+					This:C1470.ChatResult+=$chatCompletionsResult.choice.delta.text
+					
+				Else 
+					If ($chatCompletionsResult.choice.delta["reasoning_content"]#Null:C1517)
+						This:C1470.reasoning_content+=$chatCompletionsResult.choice.delta["reasoning_content"]
+						This:C1470.ChatResult:=This:C1470.reasoning_content
+					End if 
+				End if 
 			Else 
 				
 			End if 
